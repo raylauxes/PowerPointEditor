@@ -37,6 +37,8 @@ class PptEditor2:
 
         df.to_csv(os.path.join(directory, f"{file}_compare.csv"), encoding="utf-8-sig", index=False)
 
+        print(df)
+        
         return df
 
 if __name__ == '__main__':
