@@ -30,8 +30,7 @@ class PptEditor2:
         df = pd.DataFrame()
         df["Slide No"] = [pair[0] for pair in pptx_list[0]]
         for index, text_list in enumerate(pptx_list):
-            df[f"Paragraph No"] = [pair[1] for pair in text_list]
-            # df[f"File {str(index+1)}: \n{os.path.basename(pptx_paths[index])}"] = [pair[2] for pair in text_list]
+            df[f"File {str(index+1)}: \n{os.path.basename(pptx_paths[index])}"] = [pair[1] for pair in text_list]
 
             
         directory, file_name = os.path.split(pptx_paths[0])
