@@ -22,7 +22,6 @@ class PptReviser:
                         continue
                     for para_i, para in enumerate(shape.text_frame.paragraphs):
                         for run_i, run in enumerate(para.runs):
-                            # text_list.append((f"Slide {slide_i+1}", \
                             text_list.append((slide_i,
                                               shape_i,
                                               para_i,
@@ -32,7 +31,8 @@ class PptReviser:
         return text_list
 
 
-    def list_run_text(self, pptx_path):
+    def list_run_text(self, pptx_path, pptx_path2):
+        prs2 = pptx.Presentation(pptx_path2)
 
         text_list = self.pptx_to_text_list(pptx_path)
 
@@ -41,14 +41,23 @@ class PptReviser:
         for col_i, col in enumerate(cols):
             df[col] = [pair[col_i] for pair in text_list]
         df[f"Revised {col}"] = df[col] #Add "Revised Run Text" Column
-            
+
+        #Insert original pptx's paragraph texts
+        df.insert(3, "Original Paragraph Text", "orig para text")
+        for i in range(df.shape[0]):
+            slide_i = df["Slide No"][i]
+            shape_i = df["Shape No"][i]
+            para_i = df["Paragraph No"][i]
+            # df.iloc[i, 3] = prs2.slides[slide_i].shapes[shape_i].text_frame.paragraphs[para_i].text
+            df["Original Paragraph Text"][i] = prs2.slides[slide_i].shapes[shape_i].text_frame.paragraphs[para_i].text
+
         df.to_csv(os.path.join(self.directory, f"{self.file}_revised.csv"), encoding="utf-8-sig", index=False)
 
         print(df)
-        
+
         return df
 
 
 if __name__ == '__main__':
     editor = PptReviser((sys.argv[1]))
-    editor.list_run_text((sys.argv[1]))
+    editor.list_run_text(sys.argv[1], sys.argv[2])
