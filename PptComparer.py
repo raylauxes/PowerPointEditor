@@ -36,7 +36,7 @@ class PptEditor2:
         directory, file_name = os.path.split(pptx_paths[0])
         file, ext = os.path.splitext(file_name)
 
-        df.to_csv(os.path.join(directory, f"{file}_compare.csv"), encoding="utf-8-sig", index=False)
+        df.to_csv(os.path.join(directory, f"{file}_compared.csv"), encoding="utf-8-sig", index=False)
 
         print(df)
         

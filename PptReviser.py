@@ -22,11 +22,12 @@ class PptReviser:
                         continue
                     for para_i, para in enumerate(shape.text_frame.paragraphs):
                         for run_i, run in enumerate(para.runs):
-                            text_list.append((f"Slide {slide_i+1}", \
+                            # text_list.append((f"Slide {slide_i+1}", \
+                            text_list.append((slide_i,
                                               shape_i,
-                                              para_i, \
-                                              para.text, \
-                                              run_i,\
+                                              para_i,
+                                              para.text,
+                                              run_i,
                                               run.text))
         return text_list
 
@@ -39,12 +40,14 @@ class PptReviser:
         cols = ["Slide No", "Shape No", "Paragraph No", "Paragraph Text", "Run No", "Run Text"]
         for col_i, col in enumerate(cols):
             df[col] = [pair[col_i] for pair in text_list]
+        df[f"Revised {col}"] = df[col] #Add "Revised Run Text" Column
             
-        df.to_csv(os.path.join(self.directory, f"{self.file}_compare.csv"), encoding="utf-8-sig", index=False)
+        df.to_csv(os.path.join(self.directory, f"{self.file}_revised.csv"), encoding="utf-8-sig", index=False)
 
         print(df)
         
         return df
+
 
 if __name__ == '__main__':
     editor = PptReviser((sys.argv[1]))
