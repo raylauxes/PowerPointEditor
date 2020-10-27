@@ -55,19 +55,22 @@ class pptReplacer:
 
         before_col = self.dict_df[before_after_cols[0]]
         after_col = self.dict_df[before_after_cols[1]]
+        # before_col = self.dict_df[before_after_cols[0]].astype(str)
+        # after_col = self.dict_df[before_after_cols[1]].astype(str)
         for index, element in enumerate(before_col):
-            if element != after_col[index]:
-                slide_i = self.dict_df["Slide No"][index]
-                shape_i = self.dict_df["Shape No"][index]
-                para_i = self.dict_df["Paragraph No"][index]
-                run_i = self.dict_df["Run No"][index]
+            if type(after_col[index]) == str:
+                if element != after_col[index]:
+                    slide_i = self.dict_df["Slide No"][index]
+                    shape_i = self.dict_df["Shape No"][index]
+                    para_i = self.dict_df["Paragraph No"][index]
+                    run_i = self.dict_df["Run No"][index]
 
-                before_text = self.prs.slides[slide_i].shapes[shape_i].text_frame.paragraphs[para_i].runs[run_i].text
-                self.prs.slides[slide_i].shapes[shape_i].text_frame.paragraphs[para_i].runs[run_i].text = after_col[index]
-                after_text = self.prs.slides[slide_i].shapes[shape_i].text_frame.paragraphs[para_i].runs[run_i].text
-                print(f"before_text: {before_text}")
-                print(f"after_text : {after_text}")
-                print("-"*100)
+                    before_text = self.prs.slides[slide_i].shapes[shape_i].text_frame.paragraphs[para_i].runs[run_i].text
+                    self.prs.slides[slide_i].shapes[shape_i].text_frame.paragraphs[para_i].runs[run_i].text = after_col[index]
+                    after_text = self.prs.slides[slide_i].shapes[shape_i].text_frame.paragraphs[para_i].runs[run_i].text
+                    print(f"before_text: {before_text}")
+                    print(f"after_text : {after_text}")
+                    print("-"*100)
 
 
         # Get the latest timestamp for the new file name
