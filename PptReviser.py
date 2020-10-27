@@ -32,6 +32,9 @@ class PptReviser:
 
 
     def list_run_text(self, pptx_path, pptx_path2):
+        #pptx_path: path of the translated PowerPoint file
+        #pptx_path2: path of the original PowerPoint file
+
         prs2 = pptx.Presentation(pptx_path2)
 
         text_list = self.pptx_to_text_list(pptx_path)
